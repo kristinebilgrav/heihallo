@@ -25,9 +25,9 @@ LD_LIBRARY_PATH=/opt/root/lib
     
     export PATH=/opt/anaconda/bin:${PATH} 
     
-    #conda config --add channels defaults
-    #conda config --add channels conda-forge
-    #conda config --add channels bioconda
+    conda config --add channels defaults
+    conda config --add channels conda-forge
+    conda config --add channels bioconda
     
     conda install -c bioconda bwa picard bowtie 
     conda install -c bioconda samtools tabix htslib
@@ -47,15 +47,16 @@ LD_LIBRARY_PATH=/opt/root/lib
     bwa index GCF_009858895.2_ASM985889v3_genomic.fna
     samtools faidx GCF_009858895.2_ASM985889v3_genomic.fna.gz
     
-    cd /bin/ && wget https://root.cern/download/root_v6.22.00.Linux-ubuntu19-x86_64-gcc9.2.tar.gz
-    cd /bin/ && tar -xvf root_v6.22.00.Linux-ubuntu19-x86_64-gcc9.2.tar.gz
+    cd /bin/ && wget https://root.cern.ch/download/root_v6.13.02.Linux-ubuntu16-x86_64-gcc5.4.tar.gz
+    cd /bin/ && tar -xvf root_v6.13.02.Linux-ubuntu16-x86_64-gcc5.4.tar.gz
     
     export ROOTSYS=/bin/root
     export PATH=$PATH:$ROOTSYS/bin
     export SHLIB_PATH=$SHLIB_PATH:$ROOTSYS/lib
     
-    cd /bin/ && git clone https://github.com/abyzovlab/CNVnator.git
-    cd /bin/CNVnator
-    ln -s /bin/CNVnator/src/samtools samtools
+    cd /bin/ && git clone https://github.com/abyzovlab/CNVnator/releases/download/v0.4.1/CNVnator_v0.4.1.zip
+    cd /bin/unzip CNVnator_v0.4.1.zip
+    cd /bin/CNVnator_v0.4.1/src/samtools
     make 
-
+    
+ 
