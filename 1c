@@ -16,7 +16,7 @@ LD_LIBRARY_PATH=/opt/root/lib
 %post
     echo "Hello from inside the container"
     apt-get update
-    apt-get -y install wget git bzip2 build-essential gcc zlib1g-dev language-pack-en-base apt-transport-https make cmake unzip libncurses5-dev libncursesw5-dev
+    apt-get -y install wget git bzip2 build-essential gcc zlib1g-dev language-pack-en-base apt-transport-https make cmake unzip libncurses5-dev libncursesw5-dev libreadline-dev 
     update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8
 
     cd /root/ && wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh
@@ -30,7 +30,7 @@ LD_LIBRARY_PATH=/opt/root/lib
     #conda config --add channels bioconda
     
     conda install -c bioconda bwa picard bowtie 
-    conda install -c bioconda samtools tabix
+    conda install -c bioconda samtools tabix htslib
     pip install numpy cython
     
     cd /bin/ && git clone https://github.com/SciLifeLab/TIDDIT.git
@@ -47,8 +47,15 @@ LD_LIBRARY_PATH=/opt/root/lib
     bwa index GCF_009858895.2_ASM985889v3_genomic.fna
     samtools faidx GCF_009858895.2_ASM985889v3_genomic.fna.gz
     
+    cd /bin/ && wget https://root.cern/download/root_v6.22.00.Linux-ubuntu19-x86_64-gcc9.2.tar.gz
+    tar -xzvf root_v6.22.00.Linux-ubuntu19-x86_64-gcc9.2.tar.gz
+    
+    export ROOTSYS= /bin/root
+    export PATH=$PATH:$ROOTSYS/bin
+    export SHLIB_PATH=$SHLIB_PATH:$ROOTSYS/lib
+    
     cd /bin/ && git clone https://github.com/abyzovlab/CNVnator.git
     cd /bin/CNVnator
-    ln -s /path/to/src/samtools samtools
-    make OMP=no
+    ln -s /bin/CNVnator/src/samtools samtools
+    make 
 
