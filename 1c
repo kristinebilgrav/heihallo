@@ -29,7 +29,7 @@ LD_LIBRARY_PATH=/opt/root/lib
     #conda config --add channels conda-forge
     #conda config --add channels bioconda
     
-    conda install -c bioconda bwa picard bowtie CNVnator
+    conda install -c bioconda bwa picard bowtie 
     conda install -c bioconda samtools
     pip install numpy cython
     
