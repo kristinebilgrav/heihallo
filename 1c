@@ -50,5 +50,5 @@ LD_LIBRARY_PATH=/opt/root/lib
     cd /bin/ && git clone https://github.com/abyzovlab/CNVnator.git
     cd /bin/CNVnator
     ln -s /path/to/src/samtools samtools
-    make
+    make OMP=no
 
