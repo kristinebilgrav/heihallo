@@ -47,15 +47,15 @@ LD_LIBRARY_PATH=/opt/root/lib
     bwa index GCF_009858895.2_ASM985889v3_genomic.fna
     samtools faidx GCF_009858895.2_ASM985889v3_genomic.fna.gz
     
-    cd /opt/ && wget https://root.cern/download/root_v6.22.00.Linux-ubuntu19-x86_64-gcc9.2.tar.gz
-    cd /opt/ && tar -xvf root_v6.22.00.Linux-ubuntu19-x86_64-gcc9.2.tar.gz
+    cd /bin/ && wget https://root.cern/download/root_v6.22.00.Linux-ubuntu19-x86_64-gcc9.2.tar.gz
+    cd /bin/ && tar -xvf root_v6.22.00.Linux-ubuntu19-x86_64-gcc9.2.tar.gz
     
-    export ROOTSYS= /opt/root
+    export ROOTSYS=/bin/root
     export PATH=$PATH:$ROOTSYS/bin
     export SHLIB_PATH=$SHLIB_PATH:$ROOTSYS/lib
     
-    cd /opt/ && git clone https://github.com/abyzovlab/CNVnator.git
-    cd /opt/CNVnator
-    ln -s /opt/CNVnator/src/samtools samtools
+    cd /bin/ && git clone https://github.com/abyzovlab/CNVnator.git
+    cd /bin/CNVnator
+    ln -s /bin/CNVnator/src/samtools samtools
     make 
 
