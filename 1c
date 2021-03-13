@@ -30,7 +30,7 @@ LD_LIBRARY_PATH=/opt/root/lib
     #conda config --add channels bioconda
     
     conda install -c bioconda bwa picard bowtie 
-    conda install -c bioconda samtools
+    conda install -c bioconda samtools tabix
     pip install numpy cython
     
     cd /bin/ && git clone https://github.com/SciLifeLab/TIDDIT.git
@@ -46,4 +46,9 @@ LD_LIBRARY_PATH=/opt/root/lib
     
     bwa index GCF_009858895.2_ASM985889v3_genomic.fna
     samtools faidx GCF_009858895.2_ASM985889v3_genomic.fna.gz
+    
+    cd /bind && git clone https://github.com/abyzovlab/CNVnator.git
+    cd /bin/CNVnator
+    ln -s /path/to/src/samtools samtools
+    make
 
