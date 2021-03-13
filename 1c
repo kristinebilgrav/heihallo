@@ -48,7 +48,7 @@ LD_LIBRARY_PATH=/opt/root/lib
     samtools faidx GCF_009858895.2_ASM985889v3_genomic.fna.gz
     
     cd /bin/ && wget https://root.cern/download/root_v6.22.00.Linux-ubuntu19-x86_64-gcc9.2.tar.gz
-    tar -xzvf root_v6.22.00.Linux-ubuntu19-x86_64-gcc9.2.tar.gz
+    cd /bin/ && tar -xzvf root_v6.22.00.Linux-ubuntu19-x86_64-gcc9.2.tar.gz
     
     export ROOTSYS= /bin/root
     export PATH=$PATH:$ROOTSYS/bin
