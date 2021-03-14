@@ -56,7 +56,8 @@ LD_LIBRARY_PATH=/opt/root/lib
     
     cd /bin/ && wget https://github.com/abyzovlab/CNVnator/releases/download/v0.4.1/CNVnator_v0.4.1.zip 
     cd /bin && unzip CNVnator_v0.4.1.zip
-    cd /bin/CNVnator_v0.4.1/src/samtools
+    cd /bin/CNVnator_v0.4.1/src/
+    ln -s /opt/anaconda/bin/samtools samtools
     make 
     
  
