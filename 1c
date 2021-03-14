@@ -58,6 +58,6 @@ LD_LIBRARY_PATH=/opt/root/lib
     cd /bin && unzip CNVnator_v0.4.1.zip
     cd /bin/CNVnator_v0.4.1/src/
     ln -s /opt/anaconda/bin/ samtools
-    make 
+    make OMP=no
     
  
