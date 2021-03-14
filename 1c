@@ -54,8 +54,8 @@ LD_LIBRARY_PATH=/opt/root/lib
     export PATH=$PATH:$ROOTSYS/bin
     export SHLIB_PATH=$SHLIB_PATH:$ROOTSYS/lib
     
-    cd /bin/ && git clone https://github.com/abyzovlab/CNVnator/releases/download/v0.4.1/CNVnator_v0.4.1.zip
-    cd /bin/ && unzip CNVnator_v0.4.1.zip
+    cd /bin/ && wget https://github.com/abyzovlab/CNVnator/releases/download/v0.4.1/CNVnator_v0.4.1.zip 
+    cd /bin && unzip CNVnator_v0.4.1.zip
     cd /bin/CNVnator_v0.4.1/src/samtools
     make 
     
