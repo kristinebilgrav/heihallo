@@ -1,0 +1,38 @@
+import sys
+
+#counting genes, proteincoding genes and pseudogenes
+#input: txt file with paths to genomes and name of output file
+#output: file with count of genes, protein coding genes and pseudogenes
+
+imputfile = open(sys.argv[1], "r")
+outputfile = open(sys.argv[2], "w")
+
+outputfile.write("#species" + "\t" + "genes" + "\t" + "protein_coding_genes" + "\t" + "pseudogenes" + "\n")
+
+for row in imputfile:
+    row= row.strip("\n")
+    species = row.split("/")[-1].split(".")
+    file = open(row, "r")
+
+    genecount = 0
+    genelist = []
+    proteincoding = 0
+    pseudo = 0
+
+    for line in file:
+        line = line.strip("\n")
+        if line.startswith("#"):
+            continue
+        tabsplitted = line.split("\t")
+        biotype = tabsplitted[8].split("biotype=")[-1].split(";")
+        if tabsplitted[2] == "gene":
+            genecount += 1
+            biotype = tabsplitted[8].split("biotype=")[-1].split(";")
+            if biotype[0] == "protein_coding":
+                proteincoding += 1
+        if tabsplitted[2] == "pseudogene":
+            pseudo += 1
+
+    outputfile.write(species[0] + "\t" + str(genecount) + "\t" + str(proteincoding) + "\t" + str(pseudo) + "\n")
+
+
