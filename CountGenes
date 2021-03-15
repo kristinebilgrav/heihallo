@@ -15,7 +15,6 @@ for row in imputfile:
     file = open(row, "r")
 
     genecount = 0
-    genelist = []
     proteincoding = 0
     pseudo = 0
 
