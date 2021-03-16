@@ -1,0 +1,99 @@
+import sys
+import statistics
+
+#calculating median exons per protein coding gene, and median transcripts per protein coding gene
+#inout: txt file with path to genome and name of output file
+#output: file with median of exons and transcripts per protein coding gene
+
+#read imputfile and create output file
+imputfile = open(sys.argv[1], "r")
+outputfile = open(sys.argv[2], "w")
+
+#write head of output file
+outputfile.write("#species"  + "\t" + "median_exons" + "\t" + "median_transcripts" + "\n")
+
+#set dictionaries
+gene_ids = {}
+mRNA_gene = {}
+trans_exon = {}
+gene_exon= {}
+
+#read imputfile and identify species
+for row in imputfile:
+    row= row.strip("\n")
+    species = row.split("/")[-1].split(".")[0]
+
+    #loop file, look for protein coding genes, add identifyer to dictionaries
+    for line in open(row):
+        if line.startswith("##g"):
+            continue
+        if line.startswith("##s"):
+            continue
+        if line.startswith("#!"):
+            continue
+        line = line.strip("\n")
+        tabsplit = line.split("\t")
+        #print(tabsplit)
+        if line == "###":
+            continue
+        if tabsplit[2] == "gene":
+            biotype = tabsplit[-1].split("biotype=")[-1].split(";")
+            #print(biotype)
+            if biotype[0] == "protein_coding" :
+                gene_id = tabsplit[-1].split("gene_id=")[-1].split(";")
+                gene_ids[gene_id[0]] = set([])
+                gene_exon[gene_id[0]] = set([])
+
+    #loop file, look for mRNAs with identifyer matching protein coding gene, identify parent ID and adding to dictionaries 
+    for line in open(row):
+        if line.startswith("##g"):
+            continue
+        if line.startswith("##s"):
+            continue
+        if line.startswith("#!"):
+            continue
+        line = line.strip("\n")
+        tabsplit = line.split("\t")
+        if line == "###":
+            continue
+        parentgene = tabsplit[-1].split("Parent=gene:")[-1].split(";")
+        if tabsplit[2] == "mRNA" and parentgene[0] in gene_ids:
+            transcript = tabsplit[-1].split("ID=transcript:")[-1].split(";")
+            mRNA_gene[transcript[0]]= parentgene[0]
+            gene_ids[parentgene[0]].add(transcript[0])
+            trans_exon[transcript[0]] = set([])
+            
+    #calculating median
+    trans_list = []
+    for i in gene_ids:
+        trans_list.append(len(gene_ids[i]))
+    transcript_median = statistics.median(trans_list)
+    
+    #loops file, looking for exons matching transcript identifyer and gene identifyer, adding to dictionaries
+    for line in open(row):
+        if line.startswith("##g"):
+            continue
+        if line.startswith("##s"):
+            continue
+        if line.startswith("#!"):
+            continue
+        line = line.strip("\n")
+        tabsplit = line.split("\t")
+        if line == "###":
+            continue
+        parenttrans = tabsplit[-1].split("Parent=transcript:")[-1].split(";")
+        if tabsplit[2] == "exon" and parenttrans[0] in trans_exon:
+            exon_name =tabsplit[-1].split("Name=")[-1].split(";")
+            gene_exon[mRNA_gene[parenttrans[0]]].add(exon_name[0])
+            trans_exon[parenttrans[0]].add(exon_name[0])
+
+    #calculating median
+    exon_list = []
+    for e in gene_exon:
+        exon_list.append(len(gene_exon[e]))
+
+    exon_median = statistics.median(exon_list)
+
+    #writing species and median to output file
+    outputfile.write(species + "\t" + str(exon_median) + "\t" + str(transcript_median) + "\n")
+    break
