@@ -9,15 +9,18 @@ outputfile = open(sys.argv[2], "w")
 
 outputfile.write("#species" + "\t" + "genes" + "\t" + "protein_coding_genes" + "\t" + "pseudogenes" + "\n")
 
+#reads imputfile, extracts species and reads file given in imputfile
 for row in imputfile:
     row= row.strip("\n")
     species = row.split("/")[-1].split(".")
     file = open(row, "r")
 
+    #defines counters
     genecount = 0
     proteincoding = 0
     pseudo = 0
 
+    #looks for gene, counts, looks if its protein coding, counts, looks for pseudogene, counts
     for line in file:
         line = line.strip("\n")
         if line.startswith("#"):
@@ -32,6 +35,7 @@ for row in imputfile:
         if tabsplitted[2] == "pseudogene":
             pseudo += 1
 
+    #prints results to output file
     outputfile.write(species[0] + "\t" + str(genecount) + "\t" + str(proteincoding) + "\t" + str(pseudo) + "\n")
 
 
